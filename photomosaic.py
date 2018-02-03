@@ -52,7 +52,7 @@ def nearest_color(color1, colors):
     # euclidean distance between the available colors
     min_dist = float("inf")
     for c in colors:
-        euc_dist = math.sqrt(sum(map(lambda x: (x[0]-x[1])**2, zip(color1,c))))#color_distance = math.sqrt((original_rgb[0] - c[0])**2 + (original_rgb[1] - c[1])**2 + (original_rgb[2] - c[2])**2)
+        euc_dist = math.sqrt(sum(map(lambda x: (x[0]-x[1])**2, zip(color1,c))))
         if euc_dist < min_dist: nearest_col, min_dist = c, euc_dist#min_dist = euc_dist
     return nearest_col
 
@@ -76,7 +76,6 @@ def build_image(search_term, block_size, base_image_filename, output_filename):
     img = Image.open(base_image_filename)
     img = img.resize(((img.size[0]//block_size)*block_size,(img.size[1]//block_size)*block_size), Image.ANTIALIAS)
     new_image = Image.new('RGB', img.size, (0, 255, 0))
-
     img_dict = get_image_dict(search_term)
     col_keys = img_dict.keys()
     for i, color in enumerate(get_color_order(img, block_size)):
