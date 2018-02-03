@@ -56,7 +56,6 @@ def nearest_color(color1, colors):
         if euc_dist < min_dist: nearest_col, min_dist = c, euc_dist#min_dist = euc_dist
     return nearest_col
 
-
 def get_color_order(image, region_size):
     grid_width = image.size[0]//region_size
     grid_height = image.size[1]//region_size
