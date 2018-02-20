@@ -1,4 +1,5 @@
 import math
+import argparse
 import random
 import re
 from PIL import Image
@@ -82,8 +83,60 @@ def build_image(search_term, block_size, base_image_filename, output_filename, t
         patch.close()
     new_image.save(output_filename)
 
-def main(search_term, block_size, base_image_filename, output_filename):
-    build_image(search_term, block_size, base_image_filename, output_filename, thresh = 10)
+def main():
+    global topics
+    parser = argparse.ArgumentParser(
+        description="if you put nothing the example program will run"
+    )
+    parser.add_argument(
+        "-i",
+        "--input",
+        nargs='?',
+        type=str,
+        default="chemistry.jpg",
+        help="input filename"
+    )
+    parser.add_argument(
+        "-m",
+        "--main",
+        nargs='?',
+        type=str,
+        default='chemistry',
+        help="main search_term",
+    )
+    parser.add_argument(
+        "-s",
+        "--subtopics",
+        nargs='+',
+        default=topics,
+        help="subtopics to build image"
+    )
+    parser.add_argument(
+        "-d",
+        "--dim",
+        type=int,
+        default=20,
+        help="dxd pixel dimension of sub image in photomosaic"
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        nargs='?',
+        type=str,
+        default="bnh2128mosaic.jpg",
+        help="output filename"
+    )
+    parser.add_argument(
+        "-t",
+        "--thresh",
+        type=int,
+        default=10,
+        help="euclidean distance threshold for grouping average color of main image."
+    )
+    args = parser.parse_args()
+    topics = args.subtopics
+    build_image(args.main, args.dim, args.input, args.output, thresh = args.thresh)
 
-if __name__ == '__main__':
-    main('chemistry', 30,'chemistry.jpg','bnh2128mosaic.jpg')
+if __name__ == "__main__":
+    main()
+
